@@ -2,18 +2,18 @@ const express = require("express");
 const router = express.Router();
 const foodCtrl = require("../controllers/foods");
 
-router.get("/", foodCtrl.index);
+router.get("/:userId/foods", foodCtrl.index);
 
-router.get("/new", foodCtrl.new);
+router.get("/:userId/foods/new", foodCtrl.new);
 
-router.post("/", foodCtrl.create);
+router.post("/:userId/foods", foodCtrl.create);
 
-router.get("/:foodId", foodCtrl.show);
+router.get("/:userId/foods/:foodId", foodCtrl.show);
 
-router.delete("/:foodId", foodCtrl.delete);
+router.delete("/:userId/foods/:foodId", foodCtrl.delete);
 
-router.get("/:foodId/edit", foodCtrl.edit);
+router.get("/:userId/foods/:foodId/edit", foodCtrl.edit);
 
-router.put("/:foodId", foodCtrl.update);
+router.put("/:userId/foods/:foodId", foodCtrl.update);
 
 module.exports = router;

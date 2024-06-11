@@ -2,9 +2,12 @@ const User = require("../models/user");
 
 async function index(req, res) {
   try {
-    const currentUser = await User.findById(req.session.user._id);
-    res.locals.pantry = currentUser.pantry;
-    res.render("foods/index.ejs");
+    console.log(req.params);
+    const currentUser = await User.findById(req.params.userId);
+    res.render("foods/index.ejs", {
+      user: currentUser,
+      pantry: currentUser.pantry,
+    });
   } catch (error) {
     console.log(error);
     res.redirect("/");
@@ -41,10 +44,11 @@ async function deleteItem(req, res) {
 
 async function show(req, res) {
   try {
-    const currentUser = await User.findById(req.session.user._id);
+    console.log(req.params);
+    const currentUser = await User.findById(req.params.userId);
     const item = currentUser.pantry.id(req.params.foodId);
-    res.locals.item = item;
-    res.render(`foods/show.ejs`);
+    console.log(currentUser.pantry);
+    res.render(`foods/show.ejs`, { searchedUser: currentUser, item });
   } catch (error) {
     console.log(error);
     res.redirect("/");
@@ -63,7 +67,18 @@ async function edit(req, res) {
   }
 }
 
-async function update(req, res) {}
+async function update(req, res) {
+  try {
+    const currentUser = await User.findById(req.session.user._id);
+    const food = await currentUser.pantry.id(req.params.foodId);
+    food.set(req.body);
+    await currentUser.save();
+    res.redirect(`/users/${currentUser._id}/foods/${food._id}`);
+  } catch (error) {
+    console.log(error);
+    res.redirect("/");
+  }
+}
 
 module.exports = {
   index,

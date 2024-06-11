@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
-    <title>New food</title>
+    <title>Users</title>
   </head>
   <body>
     <%- include('../partials/_navbar') %>
-    <h1>Add a New Food Item</h1>
-    <form action="/users/<%= user._id %>/foods" method="POST">
-      <label for="name">Name:</label>
-      <input type="text" name="name" id="name" />
-      <button type="submit">Add Food Item</button>
-    </form>
+    <h1>Users</h1>
+    <ul>
+      <% users.forEach((user) => { %>
+      <li><a href="/users/<%= user._id %>/foods"><%= user.username %></a></li>
+      <% }) %>
+    </ul>
   </body>
 </html>

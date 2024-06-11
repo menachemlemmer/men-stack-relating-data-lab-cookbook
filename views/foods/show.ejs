@@ -3,10 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <title><%= item.name %></title>
   </head>
   <body>
+    <%- include('../partials/_navbar') %>
     <h1><%= item.name %></h1>
+    <% if (user._id == searchedUser._id) { %>
     <a href="/users/<%= user._id %>/foods/<%= item._id %>/edit">Edit Item</a>
     <form
       action="/users/<%= user._id %>/foods/<%= item._id %>?_method=DELETE"
@@ -14,5 +17,6 @@
     >
       <button type="submit">Delete Item</button>
     </form>
+    <% } %>
   </body>
 </html>
